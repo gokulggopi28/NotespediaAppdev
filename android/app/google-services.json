@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "160311520358",
+    "project_id": "notespaediaapp-cdea7",
+    "storage_bucket": "notespaediaapp-cdea7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160311520358:android:be8ca6e2915c8a372911a7",
+        "android_client_info": {
+          "package_name": "com.notespaediaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160311520358-b0obvs7t3gjb3n9tf778kg50s9sp0ie3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.notespaediaapp",
+            "certificate_hash": "54c0669a22e6671ddc88183bf6bdff17ff36704e"
+          }
+        },
+        {
+          "client_id": "160311520358-lefbhoac0s3oj8kei21tahv3utmvpu5o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.notespaediaapp",
+            "certificate_hash": "8c2e882b7acfcfdaa3c0504a530cd92b675b4a72"
+          }
+        },
+        {
+          "client_id": "160311520358-qa20scrotcbrmqlbenkdstl4c2mrenpr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.notespaediaapp",
+            "certificate_hash": "ad020d272ebbdcf90df8f32935115240295203ae"
+          }
+        },
+        {
+          "client_id": "160311520358-rrusbu7pnq6in3vo7u9puh2rldom7khe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.notespaediaapp",
+            "certificate_hash": "f2505c51dc343906082de2893913ad75fea3dc20"
+          }
+        },
+        {
+          "client_id": "160311520358-t9grme79cvcaj9b881vd2sfd4e355416.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIODZzParp5TngtcHjrHV9MqgUJF4_GvM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160311520358-t9grme79cvcaj9b881vd2sfd4e355416.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

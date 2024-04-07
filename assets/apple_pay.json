@@ -1,0 +1,11 @@
+{
+    "provider": "apple_pay",
+    "data": {
+      "merchantIdentifier": "merchant.com.example",
+      "merchantCapabilities": ["3DS", "debit", "credit"],
+      "supportedNetworks": ["amex", "visa", "masterCard", "discover"],
+      "countryCode": "US",
+      "currencyCode": "USD"
+    }
+  }
+  

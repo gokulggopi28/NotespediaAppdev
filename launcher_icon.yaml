@@ -1,0 +1,26 @@
+#  flutter pub run flutter_launcher_icons
+#  flutter pub run flutter_launcher_icons -f launcher_icon.yaml
+
+flutter_launcher_icons:
+
+  image_path: "assets/logos/NotespaediaLogo.png"
+  android: true
+  ios: true
+#  adaptive_icon_background: "#000b12"
+#  remove_alpha_ios: true
+  min_sdk_android: 21 # Lollipop
+
+  web:
+    generate: true
+    image_path: "assets/logos/NotespaediaLogo.png"
+#    background_color: "#000b12"
+#    theme_color: "#000b12"
+
+  windows:
+    generate: true
+    image_path: "assets/logos/NotespaediaLogo.png"
+    icon_size: 256 # min:48, max:256, default: 48
+
+  macos:
+    generate: true
+    mage_path: "assets/logos/NotespaediaLogo.png"

@@ -1,0 +1,36 @@
+#  dart run package_rename
+#  dart run package_rename --path="package_rename.yaml"
+#  dart run package_rename -p "package_rename.yaml"
+
+package_rename_config:
+
+  android:
+    app_name: Notespaedia
+    package_name: com.notespaediaapp
+    # override_old_package: com.example.example
+    # lang: # (Optional) (String) The android development language {kotlin(default) or java}
+
+  ios:
+    app_name: Notespaedia
+    bundle_name: com.notespaediaapp
+    package_name: com.notespaediaapp
+
+  linux:
+    app_name: Notespaedia
+    package_name: com.notespaediaapp
+    exe_name: com.notespaediaapp-linux-x64
+
+  macos:
+    app_name: Notespaedia
+    package_name: com.notespaediaapp
+    # copyright_notice: # (String) The product copyright of the macos app
+
+  web:
+    app_name: Notespaedia
+    description: Notespaedia app
+
+  windows:
+    app_name: Notespaedia
+    organization: Notespaedia
+    # copyright_notice: # (String) The legal copyright of the windows app
+    exe_name: com.notespaediaapp-windows-x64

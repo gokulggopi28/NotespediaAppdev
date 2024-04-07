@@ -1,0 +1,164 @@
+name: notespedia
+description: "A Notespedia Flutter project."
+
+
+publish_to: 'none'
+version: 1.0.53+67
+
+
+environment:
+  sdk: '>=3.2.2 <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Icons
+  cupertino_icons: ^1.0.6
+  bootstrap_icons: ^1.11.1
+  font_awesome_flutter: ^10.6.0
+  fluentui_system_icons: ^1.1.223
+  flutter_material_design_icons: ^1.1.7367
+  ionicons: ^0.2.2
+  flutter_boxicons: ^3.0.0
+
+  # Theme
+  dynamic_color: ^1.6.8
+  google_fonts: ^6.1.0
+  flex_color_scheme: ^7.3.1
+  flex_seed_scheme: ^1.4.0
+
+
+  # Main
+  url_strategy: ^0.2.0
+  get: ^4.6.6
+  get_storage: ^2.1.1
+  shared_preferences: ^2.2.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  http: ^1.1.2
+  dio: ^5.4.0
+  dio_cookie_manager: ^3.1.1
+  path_provider: ^2.1.1
+  permission_handler: ^11.1.0
+  connectivity_plus: ^5.0.2
+  image_picker: ^1.0.7
+  webview_flutter: ^3.0.0
+  flutter_local_notifications: ^16.2.0
+  flutter_windowmanager: ^0.2.0
+ 
+  retry: ^3.1.2
+  json_annotation: ^4.8.1
+
+  # Add-ons
+  gap: ^3.0.1
+  auto_size_text: ^3.0.0
+  cached_network_image: ^3.3.0
+  flutter_staggered_grid_view: ^0.7.0
+  smooth_page_indicator: ^1.1.0
+  url_launcher: ^6.2.2
+  flutter_svg: ^2.0.9
+  pin_code_fields: ^8.0.1
+  carousel_slider: ^4.2.1
+  intl: ^0.18.1
+  badges: ^3.1.2
+  flutter_slidable: ^3.0.1
+  fl_country_code_picker: ^0.1.9+1
+  flutter_expandable_fab: ^2.0.0
+  custom_navigation_bar: ^0.8.2
+  encrypt: ^5.0.0
+ 
+
+
+
+  # Animation Related
+  
+  shimmer: ^3.0.0
+  flutter_animate: ^4.2.0+1
+  animated_text_kit: ^4.2.2
+  animate_do: ^3.1.2
+  flutter_staggered_animations: ^1.1.1
+
+  # Development
+  package_info_plus: ^5.0.1
+  logger: ^2.0.2+1
+  pretty_dio_logger: ^1.3.1
+  flutter_screenutil: ^5.9.0
+  pixel_perfect: ^1.1.3
+
+  pspdfkit_flutter: ^3.7.2
+  pay: ^1.1.2
+  in_app_purchase: ^3.1.13
+  purchases_flutter: ^6.24.0
+  pointycastle: ^3.7.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.1
+  package_rename: ^1.5.2
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.8
+  hive_generator: ^2.0.1
+  json_serializable: ^6.7.1
+  build_runner: ^2.4.7
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/docs/
+    - assets/logos/
+    - assets/images/
+    - assets/images/svg/
+    - assets/images/png/
+    - assets/images/icons/
+    - assets/gpay.json
+  fonts:
+    - family: Stolzl
+      fonts:
+        - asset: assets/fonts/Stolzl/Stolzl-Bold.ttf
+        - asset: assets/fonts/Stolzl/Stolzl-Book.ttf
+        - asset: assets/fonts/Stolzl/Stolzl-Light.ttf
+        - asset: assets/fonts/Stolzl/Stolzl-Medium.ttf
+        - asset: assets/fonts/Stolzl/Stolzl-Regular.ttf
+        - asset: assets/fonts/Stolzl/Stolzl-Thin.ttf
+
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat/Montserrat-SemiBold.ttf
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
