@@ -94,121 +94,146 @@ class OrdersScreen extends StatelessWidget {
                         return const Gap(12);
                       },
                       itemBuilder: (context, index) {
-                        return Container(
-                          height: 140,
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(
-                              left: 12, right: 12, top: 12, bottom: 12),
-                          alignment: AlignmentDirectional.center,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
-                            boxShadow: [AppColors.containerShadow],
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 90,
-                                height: double.maxFinite,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(8)),
-                                  boxShadow: [AppColors.containerShadow],
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: ReusableCachedNetworkImage(
-                                    imageUrl: caController
-                                        .orderItemList[index].bookCoverImage,
-                                    fit: BoxFit.cover,
+                        return GestureDetector(
+                          onTap: () async {
+                            final currentOrderId =
+                                caController.orderItemList[index].orderId;
+                            await caController.fetchTheDetailList(
+                                orderId: currentOrderId);
+
+                            var controllerData = caController.orderDetailList
+                                .firstWhere(
+                                    (element) => element.id == currentOrderId);
+
+                            final orderDetailsUrl = caController
+                                .orderItemList[index].orderDetailsUrl;
+                            if (orderDetailsUrl.isNotEmpty) {
+                              Get.to(CheckoutWebViewScreen(
+                                  checkoutUrl: orderDetailsUrl));
+                            }
+                          },
+                          child: Container(
+                            height: 140,
+                            width: double.infinity,
+                            padding: const EdgeInsets.only(
+                                left: 12, right: 12, top: 12, bottom: 12),
+                            alignment: AlignmentDirectional.center,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8)),
+                              boxShadow: [AppColors.containerShadow],
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 90,
+                                  height: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
+                                    boxShadow: [AppColors.containerShadow],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: ReusableCachedNetworkImage(
+                                      imageUrl: caController
+                                          .orderItemList[index].bookCoverImage,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const Gap(22),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Order Number: ${caController.orderItemList[index].orderNumber}",
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        height: 0,
+                                const Gap(22),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Order Number: ${caController.orderItemList[index].orderNumber}",
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          height: 0,
+                                        ),
                                       ),
-                                    ),
-                                    const Gap(4),
-                                    Text(
-                                      caController
-                                          .orderItemList[index].bookName,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        height: 0,
+                                      const Gap(4),
+                                      Text(
+                                        caController
+                                            .orderItemList[index].bookName,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          height: 0,
+                                        ),
                                       ),
-                                    ),
-                                    const Gap(4),
-                                    Text(
-                                      caController.orderItemList[index].orderId
-                                              .toString()
-                                              .isNotEmpty
-                                          ? 'Status: ${caController.orderItemList[index].orderStatusText}'
-                                          : 'Unavailable',
-                                      style: const TextStyle(
-                                        color: Color(0xB24F4F4F),
-                                        fontSize: 12,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                        height: 0,
+                                      const Gap(4),
+                                      Text(
+                                        caController
+                                                .orderItemList[index].orderId
+                                                .toString()
+                                                .isNotEmpty
+                                            ? 'Status: ${caController.orderItemList[index].orderStatusText}'
+                                            : 'Unavailable',
+                                        style: const TextStyle(
+                                          color: Color(0xB24F4F4F),
+                                          fontSize: 12,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w500,
+                                          height: 0,
+                                        ),
                                       ),
-                                    ),
-                                    const Gap(4),
-                                    Text(
-                                      caController.orderItemList[index].orderId
-                                                  .toString() ==
-                                              ""
-                                          ? 'Date: ${caController.orderItemList[index].orderStatusDate}'
-                                          : 'Unavailable',
-                                      style: const TextStyle(
-                                        color: Color(0xB24F4F4F),
-                                        fontSize: 12,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                        height: 0,
+                                      const Gap(4),
+                                      Text(
+                                        caController.orderItemList[index]
+                                                    .orderId
+                                                    .toString() ==
+                                                ""
+                                            ? 'Date: ${caController.orderItemList[index].orderStatusDate}'
+                                            : 'Unavailable',
+                                        style: const TextStyle(
+                                          color: Color(0xB24F4F4F),
+                                          fontSize: 12,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w500,
+                                          height: 0,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              const Gap(22),
-                              IconButton(
-                                onPressed: () async {
-                                  final currentOrderId =
-                                      caController.orderItemList[index].orderId;
-                                  await caController.fetchTheDetailList(
-                                      orderId: currentOrderId);
-
-                                  var controllerData = caController
-                                      .orderDetailList
-                                      .firstWhere((element) =>
-                                          element.id == currentOrderId);
-
-                                  final orderDetailsUrl = caController
-                                      .orderItemList[index].orderDetailsUrl;
-                                  if (orderDetailsUrl.isNotEmpty) {
-                                    Get.to(CheckoutWebViewScreen(
-                                        checkoutUrl: orderDetailsUrl));
-                                  }
-                                },
-                                icon: const Icon(
-                                  BootstrapIcons.arrow_90deg_right,
-                                ),
-                              )
-                            ],
+                                const Gap(22),
+                                // Icon(
+                                //       BootstrapIcons.arrow_90deg_right,color: Colors.black,
+                                //     ),
+                                // IconButton(
+                                //   onPressed: () async {
+                                //     final currentOrderId =
+                                //         caController.orderItemList[index].orderId;
+                                //     await caController.fetchTheDetailList(
+                                //         orderId: currentOrderId);
+                                //
+                                //     var controllerData = caController
+                                //         .orderDetailList
+                                //         .firstWhere((element) =>
+                                //             element.id == currentOrderId);
+                                //
+                                //     final orderDetailsUrl = caController
+                                //         .orderItemList[index].orderDetailsUrl;
+                                //     if (orderDetailsUrl.isNotEmpty) {
+                                //       Get.to(CheckoutWebViewScreen(
+                                //           checkoutUrl: orderDetailsUrl));
+                                //     }
+                                //   },
+                                //   icon: const Icon(
+                                //     BootstrapIcons.arrow_90deg_right,
+                                //   ),
+                                // )
+                              ],
+                            ),
                           ),
                         );
                       },

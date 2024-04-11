@@ -16,99 +16,112 @@ class MainNavigationDrawer extends StatelessWidget {
           height: 0,
         );
 
-    return Drawer(
-      semanticLabel: AppTexts.drawer,
-      backgroundColor: Colors.white,
-      surfaceTintColor: Colors.white,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      elevation: 3.0,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 280,
-              width: double.maxFinite,
-              child: ReusableCachedNetworkImage(
-                placeholderIndicatorEnable: false,
-                imageUrl: AppImages.drawerHeader,
-                fit: BoxFit.cover,
+    return SafeArea(
+      child: Drawer(
+        semanticLabel: AppTexts.drawer,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+        elevation: 3.0,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 96,
+                color: Color.fromRGBO(234, 244, 241, 1),
+                width: double.maxFinite,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Image(
+                        image: AssetImage(
+                            "assets/logos/NotespaediaLogoWithName.png"),
+                        width: 169, // Setting the width of the image
+                        height: 51, // Setting the height of the image
+                        fit: BoxFit
+                            .contain, // Adjusting the image fit to contain within the container
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const Gap(8),
-            ListTile(
-              onTap: () {
-                Get.toNamed(AppRoutes.premiumPlansRoute);
-              },
-              horizontalTitleGap: 8,
-              enableFeedback: true,
-              leading: const Icon(
-                AppImages.subscriptionIcon,
-                size: 24,
-                color: AppColors.greyBrightIconColor,
-              ),
-              title: Text(
-                "Subscription",
-                style: textStyle,
-              ),
-            ),
-            ListTile(
-              onTap: () {
-                Get.to(() => OrdersScreen());
-              },
-              horizontalTitleGap: 8,
-              enableFeedback: true,
-              leading: const Icon(
-                AppImages.orderIcon,
-                size: 23,
-                color: AppColors.greyBrightIconColor,
-              ),
-              title: Padding(
-                padding: const EdgeInsets.only(top: 4.0),
-                child: Text(
-                  "Orders",
+              const Gap(8),
+              ListTile(
+                onTap: () {
+                  Get.toNamed(AppRoutes.premiumPlansRoute);
+                },
+                horizontalTitleGap: 8,
+                enableFeedback: true,
+                leading: const Icon(
+                  AppImages.subscriptionIcon,
+                  size: 24,
+                  color: AppColors.greyBrightIconColor,
+                ),
+                title: Text(
+                  "Subscription",
                   style: textStyle,
                 ),
               ),
-            ),
-            ListTile(
-              onTap: () {
-                Get.toNamed(AppRoutes.transactionsRoute);
-              },
-              horizontalTitleGap: 8,
-              enableFeedback: true,
-              leading: const Icon(
-                AppImages.transactionsIcon,
-                size: 26,
-                color: AppColors.greyBrightIconColor,
-              ),
-              title: Padding(
-                padding: const EdgeInsets.only(top: 4.0),
-                child: Text(
-                  "Transaction",
-                  style: textStyle,
+              ListTile(
+                onTap: () {
+                  Get.to(() => OrdersScreen());
+                },
+                horizontalTitleGap: 8,
+                enableFeedback: true,
+                leading: const Icon(
+                  AppImages.orderIcon,
+                  size: 23,
+                  color: AppColors.greyBrightIconColor,
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Text(
+                    "Orders",
+                    style: textStyle,
+                  ),
                 ),
               ),
-            ),
-            // ListTile(
-            //   onTap: () {},
-            //   horizontalTitleGap: 8,
-            //   enableFeedback: true,
-            //   leading: const Icon(
-            //     AppImages.coinsIcon,
-            //     size: 20,
-            //     color: AppColors.greyBrightIconColor,
-            //   ),
-            //   title: Padding(
-            //     padding: const EdgeInsets.only(top: 4.0),
-            //     child: Text(
-            //       "NP coin balance",
-            //       style: textStyle,
-            //     ),
-            //   ),
-            // ),
-            // const Gap(8),
-            // buildStorageListTile(context),
-          ],
+              ListTile(
+                onTap: () {
+                  Get.toNamed(AppRoutes.transactionsRoute);
+                },
+                horizontalTitleGap: 8,
+                enableFeedback: true,
+                leading: const Icon(
+                  AppImages.transactionsIcon,
+                  size: 26,
+                  color: AppColors.greyBrightIconColor,
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Text(
+                    "Transaction",
+                    style: textStyle,
+                  ),
+                ),
+              ),
+              // ListTile(
+              //   onTap: () {},
+              //   horizontalTitleGap: 8,
+              //   enableFeedback: true,
+              //   leading: const Icon(
+              //     AppImages.coinsIcon,
+              //     size: 20,
+              //     color: AppColors.greyBrightIconColor,
+              //   ),
+              //   title: Padding(
+              //     padding: const EdgeInsets.only(top: 4.0),
+              //     child: Text(
+              //       "NP coin balance",
+              //       style: textStyle,
+              //     ),
+              //   ),
+              // ),
+              // const Gap(8),
+              // buildStorageListTile(context),
+            ],
+          ),
         ),
       ),
     );

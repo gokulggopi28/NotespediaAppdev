@@ -228,26 +228,26 @@
 //   }
 // }
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:notespedia/models/user_profile.dart';
 import 'package:notespedia/utils/constants/app_export.dart';
-import '../../../models/user_profile.dart';
 import '../../../repositories/user_preferences.dart';
 import '../../widgets/profile/user_profile_controller.dart';
 import '../../widgets/profile/user_profile_repo.dart';
 import '../../widgets/reusable/greenContainer.dart';
+import 'package:http/http.dart' as http;
 
 class ThirdExplorerPage extends StatefulWidget {
   const ThirdExplorerPage({super.key});
 
   @override
-  State<ThirdExplorerPage> createState() => _ExplorePageState();
+  State<ThirdExplorerPage> createState() => _ThirdExplorerPageState();
 }
 
-class _ExplorePageState extends State<ThirdExplorerPage> {
+class _ThirdExplorerPageState extends State<ThirdExplorerPage> {
   final UserProfileController subscriptionController =
       Get.put(UserProfileController());
   final UserProfileRepository userProfile = Get.put(UserProfileRepository());
@@ -307,235 +307,256 @@ class _ExplorePageState extends State<ThirdExplorerPage> {
       },
     ];
 
+    Future<List<dynamic>> fetchPosts() async {
+      final url = Uri.parse(
+          'https://notespaedia.deienami.com/api/explore/explore_posts/');
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        return data['data'];
+      } else {
+        throw Exception('Failed to load posts');
+      }
+    }
+
+    final GlobalKey<ScaffoldState> _explorerScaffoldKey =
+        GlobalKey<ScaffoldState>();
+    final ScrollController _explorerScreenScrollController = ScrollController();
+
+    Get.put(CartAndOrderController());
+    Get.put(CircularStoryController());
+
     return Scaffold(
-      body: SafeArea(
-        child: Obx(
-          () => CustomScrollView(
-            slivers: [
-              MainBasicSliverAppbar(
-                text: "Explorer",
-                onPressed: () {
-                  // _explorerScaffoldKey.currentState?.openDrawer();
-                },
-              ),
-              SliverPadding(
-                padding: EdgeInsets.all(16),
-                sliver: SliverToBoxAdapter(
-                  child: Column(
+      key: _explorerScaffoldKey,
+      drawer: MainNavigationDrawer(),
+      resizeToAvoidBottomInset: false,
+      body: CustomScrollView(
+        scrollDirection: Axis.vertical,
+        controller: _explorerScreenScrollController,
+        physics: const ClampingScrollPhysics(),
+        slivers: [
+          // App bar Section
+          MainBasicSliverAppbar(
+            text: "Explorer",
+            onPressed: () {
+              _explorerScaffoldKey.currentState?.openDrawer();
+            },
+          ),
+          SliverPadding(
+            padding: EdgeInsets.all(16),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  greenContainer(context, masterYourNotes, effortlesslyOrganize,
+                      subscriptionController.subscriptionStatus.value, () {
+                    HelperFunctions.showTopSnackBar(
+                      context: context,
+                      title: "Status Message",
+                      message:
+                          "Thank you for subscribing! You'll be notified as soon as there are updates",
+                    );
+                    subscriptionController.checkSubscription(1);
+                    userProfile.getNotifiedApi(
+                        userid, subscriptionController.number.value);
+                  }),
+                  SizedBox(height: 30),
+                  Row(
                     children: [
-                      greenContainer(
-                          context,
-                          masterYourNotes,
-                          effortlesslyOrganize,
-                          subscriptionController.subscriptionStatus.value, () {
-                        HelperFunctions.showTopSnackBar(
-                          context: context,
-                          title: "Status Message",
-                          message:
-                              "Thank you for subscribing! You'll be notified as soon as there are updates",
-                        );
-                        subscriptionController.checkSubscription(1);
-                        userProfile.getNotifiedApi(
-                            userid, subscriptionController.number.value);
-                      }),
-                      SizedBox(height: 30),
-                      Row(
-                        children: [
-                          Text(
-                            notesPedia,
-                            style: TextStyle(
-                              fontFamily: "Inter",
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
                       Text(
-                        youCanKnowWho,
+                        notesPedia,
                         style: TextStyle(
                           fontFamily: "Inter",
-                          fontSize: 14,
-                          color: Colors.black.withOpacity(.64),
-                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
                         ),
-                      ),
-                      SizedBox(
-                        height: 56,
                       ),
                     ],
                   ),
-                ),
+                  SizedBox(height: 20),
+                  Text(
+                    youCanKnowWho,
+                    style: TextStyle(
+                      fontFamily: "Inter",
+                      fontSize: 14,
+                      color: Colors.black.withOpacity(.64),
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 56,
+                  ),
+                ],
               ),
-              SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                sliver: SliverGrid(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 30,
-                      mainAxisExtent: 280.sp),
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          // Action on image tap
-                        },
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
+            ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 30,
+                  mainAxisExtent: 280.sp),
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      // Action on image tap
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          height: 147,
+                          width: 156,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image:
+                                  Image.network(images[index]["image"]).image,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Row(
                           children: [
-                            Container(
-                              height: 147,
-                              width: 156,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: Image.network(images[index]["image"])
-                                      .image,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                            Expanded(
+                              child: Text(images[index]["title"],
+                                  style: TextStyle(
+                                    fontFamily: "Inter",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  )),
                             ),
-                            SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(images[index]["title"],
-                                      style: TextStyle(
-                                        fontFamily: "Inter",
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      )),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(images[index]["description"],
-                                      style: TextStyle(
-                                        fontFamily: "Inter",
-                                        color: Colors.black.withOpacity(.64),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                      )),
-                                ),
-                              ],
-                            ),
-                            // SizedBox(height: 20),
                           ],
                         ),
-                      );
-                    },
-                    childCount: images.length,
-                  ),
-                ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(images[index]["description"],
+                                  style: TextStyle(
+                                    fontFamily: "Inter",
+                                    color: Colors.black.withOpacity(.64),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                  )),
+                            ),
+                          ],
+                        ),
+                        // SizedBox(height: 20),
+                      ],
+                    ),
+                  );
+                },
+                childCount: images.length,
               ),
-              // SliverPadding(
-              //   padding: EdgeInsets.all(12),
-              //   sliver: SliverToBoxAdapter(
-              //     child: Column(
-              //       children: [
-              //         Container(
-              //           decoration: BoxDecoration(color: Color.fromRGBO(234, 244, 241, 1)),
-              //           child: Padding(
-              //             padding: const EdgeInsets.all(24),
-              //             child: Column(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 Column(
-              //                   crossAxisAlignment: CrossAxisAlignment.start,
-              //                   children: [
-              //                     Text(
-              //                       startUsingNotesPaedia,
-              //                       style: TextStyle(
-              //                           fontSize: 24.sp,
-              //                           fontWeight: FontWeight.w600,
-              //                           color: Color.fromRGBO(5, 207, 100, 1)),
-              //                     ),
-              //                     SizedBox(height: 8,),
-              //                     Text(
-              //                       getAhead,
-              //                       style: TextStyle(
-              //                           fontSize: 14.sp,
-              //                           fontWeight: FontWeight.w500,
-              //                           color: Colors.black.withOpacity(.7)),
-              //                     ),
-              //                     SizedBox(height: 24,),
-              //                     Row(
-              //                       crossAxisAlignment: CrossAxisAlignment.start,
-              //                       children: [
-              //                         SvgPicture.asset(arrow),
-              //                         Expanded(child: Padding(
-              //                           padding: const EdgeInsets.only(left: 16),
-              //                           child: Text(learnFrom),
-              //                         ))
-              //                       ],
-              //                     ),
-              //                     SizedBox(height: 32,),
-              //                     Row(
-              //                       crossAxisAlignment: CrossAxisAlignment.start,
-              //                       children: [
-              //                         SvgPicture.asset(arrow),
-              //                         Expanded(child: Padding(
-              //                           padding: const EdgeInsets.only(left: 16),
-              //                           child: Text(encourageDiscussions),
-              //                         ))
-              //                       ],
-              //                     ),
-              //                     SizedBox(height: 46,),
-              //                     Text(emailAddress,style: TextStyle(color: Color.fromRGBO(5, 207, 100, 1),fontWeight: FontWeight.w400,fontSize: 14),),
-              //                     SizedBox(height: 8,),
-              //                     Container(
-              //                       height: 46,
-              //                       color: Colors.white,
-              //                       child: TextFormField(
-              //                         decoration: InputDecoration(
-              //                           errorBorder: OutlineInputBorder(borderSide: BorderSide.none),
-              //                             disabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
-              //                             enabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
-              //                             focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
-              //                             border: InputBorder.none,
-              //                             contentPadding: EdgeInsets.all(8)
-              //                         ),
-              //                         cursorColor: Colors.black.withOpacity(.6),
-              //                         // Other properties of TextFormField
-              //                       ),
-              //                     ),
-              //                     SizedBox(height: 16,),
-              //                     GestureDetector(
-              //                       onTap: (){},
-              //                       child: Container(
-              //                         height: 46,
-              //                         width: MediaQuery.of(context).size.width,
-              //                         decoration: BoxDecoration(
-              //                           color:  Color.fromRGBO(5, 207, 100, 1),),
-              //                         child: Center(
-              //                             child: Text(
-              //                               beTheFirst,
-              //                               style: TextStyle(
-              //                                   fontSize: 14.sp,
-              //                                   fontWeight: FontWeight.w600,
-              //                                   color: Colors.white),
-              //                             )),
-              //                       ),
-              //                     ),
-              //                   ],
-              //                 ),
-              //               ],
-              //             ),
-              //           ),
-              //         ),
-              //         SizedBox(height: 56,),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-            ],
+            ),
           ),
-        ),
+          // SliverPadding(
+          //   padding: EdgeInsets.all(12),
+          //   sliver: SliverToBoxAdapter(
+          //     child: Column(
+          //       children: [
+          //         Container(
+          //           decoration: BoxDecoration(color: Color.fromRGBO(234, 244, 241, 1)),
+          //           child: Padding(
+          //             padding: const EdgeInsets.all(24),
+          //             child: Column(
+          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //               children: [
+          //                 Column(
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     Text(
+          //                       startUsingNotesPaedia,
+          //                       style: TextStyle(
+          //                           fontSize: 24.sp,
+          //                           fontWeight: FontWeight.w600,
+          //                           color: Color.fromRGBO(5, 207, 100, 1)),
+          //                     ),
+          //                     SizedBox(height: 8,),
+          //                     Text(
+          //                       getAhead,
+          //                       style: TextStyle(
+          //                           fontSize: 14.sp,
+          //                           fontWeight: FontWeight.w500,
+          //                           color: Colors.black.withOpacity(.7)),
+          //                     ),
+          //                     SizedBox(height: 24,),
+          //                     Row(
+          //                       crossAxisAlignment: CrossAxisAlignment.start,
+          //                       children: [
+          //                         SvgPicture.asset(arrow),
+          //                         Expanded(child: Padding(
+          //                           padding: const EdgeInsets.only(left: 16),
+          //                           child: Text(learnFrom),
+          //                         ))
+          //                       ],
+          //                     ),
+          //                     SizedBox(height: 32,),
+          //                     Row(
+          //                       crossAxisAlignment: CrossAxisAlignment.start,
+          //                       children: [
+          //                         SvgPicture.asset(arrow),
+          //                         Expanded(child: Padding(
+          //                           padding: const EdgeInsets.only(left: 16),
+          //                           child: Text(encourageDiscussions),
+          //                         ))
+          //                       ],
+          //                     ),
+          //                     SizedBox(height: 46,),
+          //                     Text(emailAddress,style: TextStyle(color: Color.fromRGBO(5, 207, 100, 1),fontWeight: FontWeight.w400,fontSize: 14),),
+          //                     SizedBox(height: 8,),
+          //                     Container(
+          //                       height: 46,
+          //                       color: Colors.white,
+          //                       child: TextFormField(
+          //                         decoration: InputDecoration(
+          //                           errorBorder: OutlineInputBorder(borderSide: BorderSide.none),
+          //                             disabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
+          //                             enabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
+          //                             focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
+          //                             border: InputBorder.none,
+          //                             contentPadding: EdgeInsets.all(8)
+          //                         ),
+          //                         cursorColor: Colors.black.withOpacity(.6),
+          //                         // Other properties of TextFormField
+          //                       ),
+          //                     ),
+          //                     SizedBox(height: 16,),
+          //                     GestureDetector(
+          //                       onTap: (){},
+          //                       child: Container(
+          //                         height: 46,
+          //                         width: MediaQuery.of(context).size.width,
+          //                         decoration: BoxDecoration(
+          //                           color:  Color.fromRGBO(5, 207, 100, 1),),
+          //                         child: Center(
+          //                             child: Text(
+          //                               beTheFirst,
+          //                               style: TextStyle(
+          //                                   fontSize: 14.sp,
+          //                                   fontWeight: FontWeight.w600,
+          //                                   color: Colors.white),
+          //                             )),
+          //                       ),
+          //                     ),
+          //                   ],
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //         SizedBox(height: 56,),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+        ],
       ),
+      // ),
+      // ),
     );
   }
 }

@@ -9,7 +9,6 @@ class TransactionListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(TransactionController());
     return Scaffold(
       appBar: AppBar(
         title: Text("Transactions"),

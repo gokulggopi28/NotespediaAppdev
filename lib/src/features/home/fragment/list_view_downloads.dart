@@ -67,12 +67,12 @@ class ListviewDownloads extends StatelessWidget {
                           ),
                         ),
                         const Gap(6),
-                        ReusableMoreOptionButton(
-                          onPressed: () {
-                            moreOptionsBottomSheetForContinueReading(
-                                context, index);
-                          },
-                        ),
+                        // ReusableMoreOptionButton(
+                        //   onPressed: () {
+                        //     moreOptionsBottomSheetForContinueReading(
+                        //         context, index);
+                        //   },
+                        // ),
                       ],
                     ),
                     Row(

@@ -87,9 +87,9 @@ class CategoryBasedBooksScreen extends StatelessWidget {
                                 ),
                               ),
                               const Gap(16),
-                              ReusableMoreOptionButton(
-                                onPressed: () {},
-                              )
+                              // ReusableMoreOptionButton(
+                              //   onPressed: () {},
+                              // )
                             ],
                           ),
                         ],

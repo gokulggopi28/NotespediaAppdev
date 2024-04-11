@@ -66,17 +66,17 @@ class _SignInWIthMobileScreenState extends State<SignInWIthMobileScreen> {
 
                 // Apple Section
                 const Gap(32),
-                WithAppleButton(
-                  text: "Sign In With Apple",
-                  onPressed: () {},
-                ),
-
-                // Google Section
-                const Gap(8),
-                WithGoogleButton(
-                  text: "Sign In With Google",
-                  onPressed: () {},
-                ),
+                // WithAppleButton(
+                //   text: "Sign In With Apple",
+                //   onPressed: () {},
+                // ),
+                //
+                // // Google Section
+                // const Gap(8),
+                // WithGoogleButton(
+                //   text: "Sign In With Google",
+                //   onPressed: () {},
+                // ),
 
                 //
                 const Gap(24),

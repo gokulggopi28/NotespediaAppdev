@@ -24,6 +24,12 @@ class ResponsiveGrid extends StatefulWidget {
 }
 
 class _ResponsiveGridState extends State<ResponsiveGrid> {
+  @override
+  void initState() {
+    super.initState();
+    downloadsController.fetchBookChaptersGridView(widget.bookId);
+  }
+
   final DownloadsController downloadsController =
       Get.find<DownloadsController>();
   @override
@@ -155,6 +161,9 @@ class _ResponsiveGridState extends State<ResponsiveGrid> {
                                           await downloadsController
                                               .deleteChapter(widget.bookId,
                                                   chapter.id, context);
+                                          downloadsController
+                                              .fetchBookChaptersGridView(widget
+                                                  .bookId); // Refresh the list
                                         }
                                       },
                                       child: Icon(Icons.delete,
@@ -211,9 +220,7 @@ class _ResponsiveGridState extends State<ResponsiveGrid> {
                                           color: Colors.red,
                                         ),
                                       ),
-                                      SizedBox(
-                                          width:
-                                              4), // Spacing between bullet and text
+                                      SizedBox(width: 4),
                                       Text(
                                         "New Updates",
                                         style: TextStyle(
@@ -308,9 +315,9 @@ class _ResponsiveGridState extends State<ResponsiveGrid> {
       print("Yes"); // Changes detected
       await prefs.setString('checksum_$fileName', currentChecksum);
       print('Checksum updated to reflect the current document state.');
-
       await downloadsController.updateBookDownloadView(file, chapter);
     }
+    downloadsController.fetchBookChaptersGridView(widget.bookId);
   }
 
   Future<String> calculateChecksum(File file) async {

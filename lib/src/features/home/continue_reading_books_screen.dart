@@ -124,15 +124,15 @@ class _ContinueReadingBooksScreenState
                                         ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 6.0),
-                                      child: ReusableMoreOptionButton(
-                                        onPressed: () {
-                                          moreOptionsBottomSheetForContinueReading(
-                                              context, index);
-                                        },
-                                      ),
-                                    ),
+                                    // Padding(
+                                    //   padding: const EdgeInsets.only(left: 6.0),
+                                    //   child: ReusableMoreOptionButton(
+                                    //     onPressed: () {
+                                    //       moreOptionsBottomSheetForContinueReading(
+                                    //           context, index);
+                                    //     },
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                                 BookTitle14(

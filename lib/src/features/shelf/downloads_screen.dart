@@ -91,11 +91,11 @@ class DownloadsScreen extends StatelessWidget {
                         ),
                       ),
                       const Gap(6),
-                      ReusableMoreOptionButton(
-                        onPressed: () {
-                          // Implement your logic for more options here
-                        },
-                      ),
+                      // ReusableMoreOptionButton(
+                      //   onPressed: () {
+                      //     // Implement your logic for more options here
+                      //   },
+                      // ),
                     ],
                   ),
                   Row(

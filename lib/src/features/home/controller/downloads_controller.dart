@@ -170,12 +170,22 @@ class DownloadsController extends GetxController {
         HelperFunctions.showTopSnackBar(
           context: context,
           title: "Success",
-          message: "Cart item updated successfully",
+          message: "Deleted successfully",
         );
       } else {
+        HelperFunctions.showTopSnackBar(
+          context: context,
+          title: "Error",
+          message: "Delete Failed",
+        );
         DebugLogger.warning("Failed to send chapter update confirmation.");
       }
     } catch (e) {
+      HelperFunctions.showTopSnackBar(
+        context: context,
+        title: "Error",
+        message: "Delete Failed",
+      );
       DebugLogger.error("Error sending chapter update confirmation: $e");
     }
   }

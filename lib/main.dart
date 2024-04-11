@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:notespedia/repositories/user_preferences.dart';
 import 'package:notespedia/src/features/cart/controller/promo_code_controller.dart';
+import 'package:notespedia/src/features/detailed/controller/transaction_controller.dart';
 import 'package:notespedia/src/widgets/profile/user_profile_controller.dart';
 import 'package:notespedia/utils/constants/app_export.dart';
 import 'package:path_provider/path_provider.dart';
@@ -50,6 +51,7 @@ Future<void> main() async {
   runApp(
     const MyApp(),
   );
+  Get.lazyPut(() => TransactionController(), fenix: true);
 }
 
 Future<void> configureSDKForInApp() async {

@@ -4,6 +4,7 @@ import 'package:notespedia/src/features/account/fourth_account_screen.dart';
 import 'package:notespedia/src/features/detailed/add_address_screen.dart';
 import 'package:notespedia/src/features/detailed/address_list_screen.dart';
 import 'package:notespedia/utils/constants/app_export.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../widgets/profile/user_profile_controller.dart';
 import '../navigation/home_screen.dart';
 import '../navigation/navigationController.dart';
@@ -58,6 +59,9 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       )),
                 ),
+                SizedBox(
+                  height: 16,
+                ),
                 // settingsImageRow(context),
                 // settingsText("Get 1 month free Premium Plan"),
                 // settingsText("Refer and Earn"),
@@ -67,15 +71,60 @@ class SettingsScreen extends StatelessWidget {
                 // Divider(color: Color(0x1A000000)),
                 // settingsItem("Personal Information", false,
                 //     () => Get.to(() => PersonalInformationScreen())),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Personal Information",
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                      )),
+                ),
+
                 settingsItem("Account", true,
                     () => Get.to(() => PersonalInformationScreen())),
                 settingsItem(
                     "Addresses", true, () => Get.to(() => AddressesScreen())),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  child: Divider(),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Legal",
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                      )),
+                ),
+                settingsItem(
+                    "Privacy Policy",
+                    true,
+                    () =>
+                        _launchURL("https://notespaedia.com/privacy-policy/")),
+                settingsItem(
+                    "Terms of use",
+                    true,
+                    () => _launchURL(
+                        "https://notespaedia.com/terms-of-services/")),
                 logoutButton(context),
               ],
             ),
           ),
         ));
+  }
+
+  Future<void> _launchURL(String urlString) async {
+    final Uri uri = Uri.parse(urlString);
+    if (!await canLaunch(uri.toString())) {
+      throw Exception('Could not launch url');
+    } else {
+      await launch(uri.toString());
+    }
   }
 
   Widget settingsImageRow(BuildContext context) {

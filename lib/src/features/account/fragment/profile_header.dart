@@ -30,7 +30,7 @@ class ProfileHeader extends StatelessWidget {
           subscriptionController.subscriptionStatus.value == 'subscribed';
       return Container(
         width: double.infinity,
-        height: 180,
+        height: 160,
         decoration: ShapeDecoration(
           color: Color(0xFFEAF4F1),
           shape: RoundedRectangleBorder(
@@ -99,25 +99,25 @@ class ProfileHeader extends StatelessWidget {
                           ),
                     ),
                     const Gap(14),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TitleAndTextGrid(
-                          count: "${profile.notes}",
-                          title: "Notes",
-                        ),
-                        ReusableVerticalBar(),
-                        TitleAndTextGrid(
-                          count: "${profile.followers}",
-                          title: "Followers",
-                        ),
-                        ReusableVerticalBar(),
-                        TitleAndTextGrid(
-                          count: "${profile.following}",
-                          title: "Following",
-                        ),
-                      ],
-                    )
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     TitleAndTextGrid(
+                    //       count: "${profile.notes}",
+                    //       title: "Notes",
+                    //     ),
+                    //     ReusableVerticalBar(),
+                    //     TitleAndTextGrid(
+                    //       count: "${profile.followers}",
+                    //       title: "Followers",
+                    //     ),
+                    //     ReusableVerticalBar(),
+                    //     TitleAndTextGrid(
+                    //       count: "${profile.following}",
+                    //       title: "Following",
+                    //     ),
+                    //   ],
+                    // )
                   ],
                 ),
               ),

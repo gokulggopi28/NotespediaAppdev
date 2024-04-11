@@ -73,40 +73,43 @@ class _ListviewContinueReadingBooksState
                                 ),
                               ),
                             ),
-                            Positioned(
-                              right: 0,
-                              bottom: 0,
-                              child: PlaceableDownloadButton(
-                                onPressed: () {},
-                              ),
-                            ),
+                            // Positioned(
+                            //   right: 0,
+                            //   bottom: 0,
+                            //   child: PlaceableDownloadButton(
+                            //     onPressed: () {},
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
                     ),
                     const Gap(6),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: ReusableLinearProgressIndicator(
-                            value: localContinueReadingList[index]
-                                    .chaptersReadedCount /
-                                (continueReadingList?[index]
-                                        .chaptersTotalCount ??
-                                    0),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: ReusableLinearProgressIndicator(
+                              value: localContinueReadingList[index]
+                                      .chaptersReadedCount /
+                                  (continueReadingList?[index]
+                                          .chaptersTotalCount ??
+                                      0),
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 6.0),
-                          child: ReusableMoreOptionButton(
-                            onPressed: () {
-                              moreOptionsBottomSheetForContinueReading(
-                                  context, index);
-                            },
-                          ),
-                        ),
-                      ],
+                          // Padding(
+                          //   padding: const EdgeInsets.only(left: 6.0),
+                          //   child: ReusableMoreOptionButton(
+                          //     onPressed: () {
+                          //       moreOptionsBottomSheetForContinueReading(
+                          //           context, index);
+                          //     },
+                          //   ),
+                          // ),
+                        ],
+                      ),
                     ),
                     BookTitle14(
                       title:

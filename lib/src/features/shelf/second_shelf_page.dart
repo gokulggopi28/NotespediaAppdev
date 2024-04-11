@@ -5,6 +5,7 @@ import 'package:notespedia/src/features/home/fragment/listview_shelf_categories.
 import 'package:notespedia/src/widgets/shelf/unsubscibed_shelf.dart';
 import 'package:notespedia/utils/constants/app_export.dart';
 
+import '../authentication/sign_in_with_mobile_screen.dart';
 import '../home/fragment/listview_save_for_later_books.dart';
 import '../subscription/subscription_controller.dart';
 import 'fragment/listview_category_books.dart';
@@ -22,6 +23,18 @@ class SecondShelfPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authController = Get.find<AuthenticationController>();
+    if (!authController.isLoggedIn.value) {
+      Future.delayed(Duration.zero, () {
+        HelperFunctions.showTopSnackBar(
+          context: context,
+          title: "Status Message",
+          message: "Please Login",
+        );
+        Get.to(() => SignInWIthMobileScreen());
+      });
+    }
+
     Get.put(SubscriptionController());
     final SubscriptionController subscriptionController =
         Get.find<SubscriptionController>();
@@ -50,7 +63,7 @@ class SecondShelfPage extends StatelessWidget {
               ),
 
               // My Notes Section
-              const SliverToBoxAdapter(child: ContainerMyNotes()),
+              // const SliverToBoxAdapter(child: ContainerMyNotes()),
               const SliverGap(8),
               SliverPadding(
                 padding: const EdgeInsets.only(left: 16.0, right: 3.0),
@@ -78,19 +91,6 @@ class SecondShelfPage extends StatelessWidget {
                 ),
               ),
               const SliverToBoxAdapter(child: ListviewContinueReadingBooks()),
-              const SliverGap(8),
-              SliverPadding(
-                padding: const EdgeInsets.only(left: 16.0, right: 3.0),
-                sliver: SliverToBoxAdapter(
-                  child: ReusableTitleAndIconButton(
-                    title: "Written Notes",
-                    onPressed: () {
-                      Get.toNamed("/writtenNotes");
-                    },
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(child: ListViewWrittenNotes()),
               const SliverGap(8),
               SliverPadding(
                 padding: const EdgeInsets.only(left: 16.0, right: 3.0),
