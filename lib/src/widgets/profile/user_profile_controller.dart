@@ -22,6 +22,30 @@ class UserProfileController extends GetxController {
     }
   }
 
+  RxString subscriptionStatus = "Get Notified".obs;
+  RxInt number = 0.obs;
+
+  void checkSubscription(int count) {
+    if (count == 0) {
+      number.value = 0;
+      subscriptionStatus.value = "Get Notified";
+    } else if (count == 1) {
+      number.value = 1;
+      subscriptionStatus.value = "Subscribed";
+    }
+  }
+
+  // void getNotified() {
+  //   // Your logic to handle subscription when count is "0"
+  //   // For example:
+  //   // Call your API or perform any action here
+  //   subscriptionStatus.value = "Subscribed";
+  // }
+
+  void clearUserProfile() {
+    userProfile.value = null;
+  }
+
   @override
   void onInit() {
     super.onInit();

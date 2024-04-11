@@ -9,6 +9,7 @@ import '../home/controller/save_later_controller.dart';
 import '../home/controller/user_posts_controller.dart';
 import '../home/fragment/listview_save_for_later_books.dart';
 import '../shelf/save_for_later_books_screen.dart';
+import '../shelf/user_post_screen.dart';
 import '../subscription/subscription_controller.dart';
 
 class FourthAccountPage extends StatefulWidget {
@@ -92,7 +93,7 @@ class _FourthAccountPageState extends State<FourthAccountPage>
             ? TabBarView(
                 controller: _tabController,
                 children: [
-                  UserPostScreen(),
+                  ProfilePostScreen(),
                   SaveForLaterBooksScreen(),
                 ],
               )

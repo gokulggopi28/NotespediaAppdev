@@ -6,6 +6,7 @@ class UserProfile {
   final int notes;
   final int followers;
   final int following;
+  final int? getMeNotified;
 
   UserProfile({
     required this.name,
@@ -15,6 +16,7 @@ class UserProfile {
     required this.notes,
     required this.followers,
     required this.following,
+    this.getMeNotified,
   });
 
   factory UserProfile.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class UserProfile {
       notes: json['data']['notes'] ?? 0,
       followers: json['data']['followers'] ?? 0,
       following: json['data']['following'] ?? 0,
+      getMeNotified: json['data']['get_me_notified'] ?? 0,
     );
   }
 }
