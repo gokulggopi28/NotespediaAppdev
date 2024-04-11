@@ -49,22 +49,24 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.all(16.0),
-                  child: Text(
-                      "Signed in as ${userProfileController.userProfile.value?.name ?? 'Unavailable'}",
-                      style: TextStyle(
+                  child: Obx(() => Text(
+                        "Signed in as ${userProfileController.userProfile.value?.name ?? 'User'}",
+                        style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
-                          color: Colors.black)),
+                          color: Colors.black,
+                        ),
+                      )),
                 ),
-                settingsImageRow(context),
-                settingsText("Get 1 month free Premium Plan"),
-                settingsText("Refer and Earn"),
-                settingsCategoryTitle("App Settings"),
-                settingsOption("App Notification"),
-                settingsOption("Dark Mode"),
-                Divider(color: Color(0x1A000000)),
-                settingsItem("Personal Information", false,
-                    () => Get.to(() => PersonalInformationScreen())),
+                // settingsImageRow(context),
+                // settingsText("Get 1 month free Premium Plan"),
+                // settingsText("Refer and Earn"),
+                // settingsCategoryTitle("App Settings"),
+                // settingsOption("App Notification"),
+                // settingsOption("Dark Mode"),
+                // Divider(color: Color(0x1A000000)),
+                // settingsItem("Personal Information", false,
+                //     () => Get.to(() => PersonalInformationScreen())),
                 settingsItem("Account", true,
                     () => Get.to(() => PersonalInformationScreen())),
                 settingsItem(

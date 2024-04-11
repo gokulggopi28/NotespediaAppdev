@@ -1,23 +1,17 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart' as dio;
 import 'package:notespedia/src/features/subscription/subscription_controller.dart';
 import 'package:notespedia/utils/constants/app_export.dart';
+import 'package:pspdfkit_flutter/pspdfkit.dart';
 
 import '../../../repositories/user_preferences.dart';
 import '../../widgets/profile/user_profile_controller.dart';
-import '../account/fourth_account_screen.dart';
 import '../detailed/controller/transaction_controller.dart';
-import '../explorer/third_explorer_page.dart';
-import '../shelf/second_shelf_page.dart';
 import 'controller/course_controller.dart';
-import 'fragment/expandable_fab_floating_action_button.dart';
 import 'fragment/home_sliver_appbar.dart';
 import 'fragment/listview_circular_stories.dart';
 import 'fragment/listview_fresh_release_books.dart';
-import 'fragment/listview_suggested_friends.dart';
 import 'fragment/listview_top_reads.dart';
 import 'fragment/multi_section_categories.dart';
-import 'fragment/slivergrid_home_explore.dart';
 import 'fragment/staff_slider_and_indicator.dart';
 
 class FirstHomePage extends StatelessWidget {
@@ -59,8 +53,20 @@ class FirstHomePage extends StatelessWidget {
       key: homeScaffoldKey,
       resizeToAvoidBottomInset: false,
       drawer: MainNavigationDrawer(),
-      floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: const ExpandableFabFloatingActionButton(),
+      // floatingActionButtonLocation: ExpandableFab.location,
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          createBlankDocument();
+        },
+        backgroundColor: Colors.white,
+        child: const Icon(
+          AppImages.editIcon,
+          color: Colors.black,
+          size: 26,
+        ),
+      ),
+      // floatingActionButton: const ExpandableFabFloatingActionButton(),
       extendBody: true,
       body: RefreshIndicator.adaptive(
         edgeOffset: 20,
@@ -263,5 +269,38 @@ class FirstHomePage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void createBlankDocument() async {
+    List<NewPage> pages = [
+      NewPage.fromPattern(PagePattern.blank, pageSize: PageSize.a5),
+    ];
+
+    final tempDir = await Pspdfkit.getTemporaryDirectory();
+    final tempDocumentPath = '${tempDir.path}/blankPdf.pdf';
+
+    var filePath =
+        await PspdfkitProcessor.instance.generatePdf(pages, tempDocumentPath);
+
+    await Pspdfkit.present(filePath!);
+
+    Pspdfkit.pdfViewControllerWillDismiss = () => saveNote(filePath);
+  }
+
+  Future<void> saveNote(String filePath) async {
+    String apiUrl = '${ApiConstants.baseUrl}shelf/notes/';
+
+    dio.Dio dioInstance = dio.Dio();
+    String fileName = filePath.split('/').last;
+    dio.FormData formData = dio.FormData.fromMap({
+      "user_id": UserPreferences.userId,
+      "file": await dio.MultipartFile.fromFile(filePath, filename: fileName),
+    });
+    try {
+      var response = await dioInstance.post(apiUrl, data: formData);
+      return response.data['id'];
+    } catch (error) {
+      print(error);
+    }
   }
 }

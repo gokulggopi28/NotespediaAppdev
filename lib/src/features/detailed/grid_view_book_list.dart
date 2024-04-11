@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:pspdfkit_flutter/pspdfkit.dart';
@@ -271,16 +273,24 @@ class _ResponsiveGridState extends State<ResponsiveGrid> {
     Dio dioInstance = Dio();
     final dir = await getApplicationDocumentsDirectory();
     final file = File('${dir.path}/$fileName.pdf');
-    print('File will be saved as: ${file.path}');
+
+    String originalChecksum = "";
+    late SharedPreferences prefs;
+
     try {
-      _showLoadingDialog(context); // Show loading dialog
+      _showLoadingDialog(context);
+      prefs = await SharedPreferences.getInstance();
 
       if (!await file.exists()) {
         print('Downloading file: $fileName');
         await dioInstance.download(url, file.path);
         print('File downloaded and saved as: ${file.path}');
+        originalChecksum = await calculateChecksum(file);
+        await prefs.setString('checksum_$fileName', originalChecksum);
+        print('Original checksum stored.');
       } else {
         print('$fileName already exists.');
+        originalChecksum = prefs.getString('checksum_$fileName') ?? "";
       }
 
       await Pspdfkit.present(file.path);
@@ -289,7 +299,29 @@ class _ResponsiveGridState extends State<ResponsiveGrid> {
     } finally {
       Navigator.of(context, rootNavigator: true).pop('dialog');
     }
-    await downloadsController.updateBookDownloadView(file, chapter);
+
+    // Recalculate checksum after potential modifications
+    final currentChecksum = await calculateChecksum(file);
+    if (originalChecksum == currentChecksum) {
+      print("No"); // No changes detected
+    } else {
+      print("Yes"); // Changes detected
+      await prefs.setString('checksum_$fileName', currentChecksum);
+      print('Checksum updated to reflect the current document state.');
+
+      await downloadsController.updateBookDownloadView(file, chapter);
+    }
+  }
+
+  Future<String> calculateChecksum(File file) async {
+    try {
+      final bytes = await file.readAsBytes();
+      final digest = sha256.convert(bytes);
+      return digest.toString();
+    } catch (e) {
+      print('Error calculating checksum: $e');
+      return '';
+    }
   }
 
   void _showLoadingDialog(BuildContext context) {

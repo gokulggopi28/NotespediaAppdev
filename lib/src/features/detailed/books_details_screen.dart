@@ -147,9 +147,9 @@ class _BooksDetailsScreenState extends State<BooksDetailsScreen> {
         onWillPop: () async {
           if (Navigator.of(context).canPop()) {
             Navigator.of(context).pop(); // Pop the current route.
-            return false; // Prevent the system from popping the route, as we've handled it manually.
+            return false;
           }
-          return true; // Allow the system to handle the back button (e.g., exiting the app) if no routes to pop.
+          return true;
         },
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -843,28 +843,28 @@ class _BooksDetailsScreenState extends State<BooksDetailsScreen> {
         ),
       ),
       actions: [
-        IconButton(
-          enableFeedback: true,
-          onPressed: () {},
-          icon: const Icon(
-            AppImages.favouriteIcon,
-            semanticLabel: AppTexts.favourite,
-            color: AppColors.greyBrightIconColor,
-            size: 28,
-          ),
-        ),
+        // IconButton(
+        //   enableFeedback: true,
+        //   onPressed: () {},
+        //   icon: const Icon(
+        //     AppImages.favouriteIcon,
+        //     semanticLabel: AppTexts.favourite,
+        //     color: AppColors.greyBrightIconColor,
+        //     size: 28,
+        //   ),
+        // ),
         IconButton(
           icon: Icon(isBookSaved ? Icons.bookmark : Icons.bookmark_border),
           onPressed: _toggleSavedForLater,
         ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            AppImages.shareIcon,
-            color: AppColors.greyBrightIconColor,
-            size: 28,
-          ),
-        ),
+        // IconButton(
+        //   onPressed: () {},
+        //   icon: const Icon(
+        //     AppImages.shareIcon,
+        //     color: AppColors.greyBrightIconColor,
+        //     size: 28,
+        //   ),
+        // ),
         // Added Cart Icon Button with Badge
         IconButton(
           onPressed: () {

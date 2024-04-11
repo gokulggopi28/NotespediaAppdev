@@ -34,7 +34,6 @@ class ImageUploadController extends GetxController {
     }
   }
 
-  // New method to pick and upload an image from the gallery
   Future<void> pickAndUploadImageFromGallery() async {
     final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
     if (photo != null) {
