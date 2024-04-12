@@ -36,7 +36,7 @@ class AddressesController extends GetxController {
   }
 
   Future<void> deleteAddress(int addressId) async {
-    int userId = UserPreferences.userId;
+    int userId = UserPreferences.userId; // Similarly here
     try {
       var response = await Dio().delete(
           'https://notespaedia.deienami.com/api/users/address/$addressId/?user_id=$userId');

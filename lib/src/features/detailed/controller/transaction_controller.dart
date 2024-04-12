@@ -18,8 +18,7 @@ class TransactionController extends GetxController {
   void fetchTransactions() async {
     isLoading(true);
     try {
-      var userId =
-          UserPreferences.userId; // Assume this exists and fetches the user ID
+      var userId = UserPreferences.userId;
       var response = await http.get(Uri.parse(
           'https://notespaedia.deienami.com/api/financials/transaction_list_view/?user_id=$userId'));
       if (response.statusCode == 200) {
@@ -32,8 +31,6 @@ class TransactionController extends GetxController {
         throw Exception('Failed to load transactions');
       }
     } catch (e) {
-      Get.snackbar('Error', 'Failed to fetch data: $e',
-          snackPosition: SnackPosition.BOTTOM);
     } finally {
       isLoading(false);
     }

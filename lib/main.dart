@@ -51,7 +51,6 @@ Future<void> main() async {
   runApp(
     const MyApp(),
   );
-  Get.lazyPut(() => TransactionController(), fenix: true);
 }
 
 Future<void> configureSDKForInApp() async {
