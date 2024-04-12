@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:notespedia/utils/constants/app_export.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pspdfkit_flutter/pspdfkit.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../repositories/user_preferences.dart';
 import '../../features/detailed/controller/expandable_list_controller.dart';
@@ -8,8 +13,13 @@ import '../../features/navigation/custom_login_alert.dart';
 import '../../features/navigation/custom_subscription_alert.dart';
 import '../../features/subscription/subscription_controller.dart';
 
-class ChapterInfoSliverList extends StatelessWidget {
-  ChapterInfoSliverList({Key? key}) : super(key: key);
+class ChapterInfoSliverList extends StatefulWidget {
+  @override
+  _ChapterInfoSliverListState createState() => _ChapterInfoSliverListState();
+}
+
+class _ChapterInfoSliverListState extends State<ChapterInfoSliverList> {
+  bool isLoading = false;
 
   final ExpandableListController controller =
       Get.put(ExpandableListController());
@@ -54,15 +64,50 @@ class ChapterInfoSliverList extends StatelessWidget {
                       onTap: () async {
                         if (isUserEligibleForInteraction) {
                           String pdfUrl =
-                              bdController.bookDetailData[0].fileurl;
-                          int startPage =
-                              bdController.bookChaptersList[index].startPage;
-                          int userId = UserPreferences.userId;
+                              bdController.bookChaptersList[index].chapterUrl;
                           if (pdfUrl.isNotEmpty) {
-                            await downloadAndOpenPdf(context, pdfUrl, userId,
-                                startPage: startPage);
+                            setState(() {
+                              isLoading = true;
+                            });
+                            try {
+                              File localPdfFile =
+                                  await downloadAndSavePdfFile(pdfUrl);
+                              final Map<String, dynamic> configuration =
+                                  subscriptionController
+                                              .subscriptionStatus.value ==
+                                          'subscribed'
+                                      ? {
+                                          "enableAnnotationEditing": true,
+                                          "androidShowThumbnailGridAction":
+                                              true,
+                                          "androidShowSearchAction": true,
+                                          "androidShowPrintAction": true,
+                                          "androidEnableDocumentEditor": true,
+                                        }
+                                      : {
+                                          "enableAnnotationEditing": false,
+                                          "androidShowThumbnailGridAction":
+                                              false,
+                                          "androidShowSearchAction": false,
+                                          "androidShowPrintAction": false,
+                                          "androidEnableDocumentEditor": false,
+                                        };
+
+                              await Pspdfkit.present(localPdfFile.path,
+                                  configuration: configuration);
+                            } catch (e) {
+                              print("Error downloading or opening the PDF: $e");
+                            } finally {
+                              setState(() {
+                                isLoading = false;
+                              });
+                            }
                           } else {
-                            print("PDF URL is not available or invalid.");
+                            HelperFunctions.showTopSnackBar(
+                              context: context,
+                              title: "Status Message",
+                              message: "Sorry,Chapter Not Available",
+                            );
                           }
                         } else {
                           if (!authController.isLoggedIn.value) {
@@ -334,5 +379,18 @@ class ChapterInfoSliverList extends StatelessWidget {
       },
       itemCount: 5,
     );
+  }
+
+  Future<File> downloadAndSavePdfFile(String pdfUrl) async {
+    var response = await http.get(Uri.parse(pdfUrl));
+    var documentDirectory = await getApplicationDocumentsDirectory();
+    File file = File('${documentDirectory.path}/downloaded_pdf.pdf');
+
+    if (response.statusCode == 200) {
+      await file.writeAsBytes(response.bodyBytes);
+    } else {
+      throw Exception('Failed to download file');
+    }
+    return file;
   }
 }

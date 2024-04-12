@@ -44,6 +44,7 @@ class BookChaptersList {
   final int pages;
   final int startPage;
   final int endPage;
+  final String chapterUrl;
   final int readCompletionsPercentage;
   final int readPages;
   final int isDownloaded;
@@ -56,6 +57,7 @@ class BookChaptersList {
     required this.pages,
     required this.startPage,
     required this.endPage,
+    required this.chapterUrl,
     required this.readCompletionsPercentage,
     required this.readPages,
     required this.isDownloaded,
@@ -70,6 +72,7 @@ class BookChaptersList {
         pages: json["pages"],
         startPage: json["start_page_number"],
         endPage: json["end_page_number"],
+        chapterUrl: json["chapter_url"],
         readCompletionsPercentage: json["read_completions_percentage"],
         readPages: json["read_pages"],
         isDownloaded: json["is_downloaded"],
@@ -83,6 +86,7 @@ class BookChaptersList {
         "pages": pages,
         "start_page_number": startPage,
         "end_page_number": endPage,
+        "chapter_url": chapterUrl,
         "read_completions_percentage": readCompletionsPercentage,
         "read_pages": readPages,
         "is_downloaded": isDownloaded,
