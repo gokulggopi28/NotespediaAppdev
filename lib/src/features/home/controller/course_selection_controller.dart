@@ -78,39 +78,45 @@ class CourseSelectionController extends GetxController {
       hasError(true);
     }
 
+    // Assume courseList has already been populated from JSON
     if (courseList.isEmpty ||
         !(authController.isLoggedIn.isTrue && UserPreferences.userId > 0)) {
-      // Initialize defaultCourse here to ensure its availability outside the if block
-      CourseList defaultCourse = CourseList(courseId: 1, courseName: "Medical");
-
-      // Check if "Medical" is already in the list to avoid duplicates
+      // Find the course with isDefault set to 1
+      CourseList defaultCourse = courseList.firstWhere((c) => c.isDefault == 1,
+          orElse: () => CourseList(
+              courseId: 1, courseName: "Default Course", isDefault: 1));
       int existingIndex =
-          courseList.indexWhere((c) => c.courseName == "Medical");
+          courseList.indexWhere((c) => c.courseId == defaultCourse.courseId);
+
+      // If not found, add a default course as a fallback (if necessary)
       if (existingIndex == -1) {
         courseList.add(defaultCourse);
-        // Update the index of "Medical" in courseList
-        existingIndex = courseList.indexWhere((c) => c.courseName == "Medical");
+        existingIndex =
+            courseList.indexWhere((c) => c.courseId == defaultCourse.courseId);
       }
+
       selectedIndex.value = existingIndex;
 
-      int defaultCourseId =
-          defaultCourse.courseId; // Now defaultCourse is accessible here
-
-      // Update selectedCourseId in all related controllers:
+      // Update selectedCourseId in all related controllers and trigger data fetching
       Get.find<FreshReleaseController>().selectedCourseId.value =
-          defaultCourseId;
+          defaultCourse.courseId;
       Get.find<CircularStoryController>().selectedCourseId.value =
-          defaultCourseId;
-      Get.find<TopReadsController>().selectedCourseId.value = defaultCourseId;
+          defaultCourse.courseId;
+      Get.find<TopReadsController>().selectedCourseId.value =
+          defaultCourse.courseId;
       Get.find<StaffPublisherController>().selectedCourseId.value =
-          defaultCourseId;
+          defaultCourse.courseId;
       Get.find<BooksCategoryController>().selectedCourseId.value =
-          defaultCourseId;
+          defaultCourse.courseId;
+
+      // Trigger data fetching for each controller
       Get.find<FreshReleaseController>().fetchFreshReleaseBooks();
       Get.find<CircularStoryController>().fetchStories();
       Get.find<StaffPublisherController>().fetchStaffPublisher();
       Get.find<TopReadsController>().fetchTopReadBooks(1);
       Get.find<BooksCategoryController>().fetchCategoryBooks();
+    } else {
+      // Your existing logic if the list is not empty and user is logged in
     }
   }
 

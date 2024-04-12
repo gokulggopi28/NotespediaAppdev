@@ -186,22 +186,22 @@ class OrdersScreen extends StatelessWidget {
                                           height: 0,
                                         ),
                                       ),
-                                      const Gap(4),
-                                      Text(
-                                        caController.orderItemList[index]
-                                                    .orderId
-                                                    .toString() ==
-                                                ""
-                                            ? 'Date: ${caController.orderItemList[index].orderStatusDate}'
-                                            : 'Unavailable',
-                                        style: const TextStyle(
-                                          color: Color(0xB24F4F4F),
-                                          fontSize: 12,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w500,
-                                          height: 0,
-                                        ),
-                                      ),
+                                      // const Gap(4),
+                                      // Text(
+                                      //   caController.orderItemList[index]
+                                      //               .orderId
+                                      //               .toString() ==
+                                      //           ""
+                                      //       ? 'Date: ${caController.orderItemList[index].orderStatusDate}'
+                                      //       : 'Unavailable',
+                                      //   style: const TextStyle(
+                                      //     color: Color(0xB24F4F4F),
+                                      //     fontSize: 12,
+                                      //     fontFamily: 'Inter',
+                                      //     fontWeight: FontWeight.w500,
+                                      //     height: 0,
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                 ),

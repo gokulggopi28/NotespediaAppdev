@@ -67,7 +67,13 @@ class FutureBuilderSliverList extends StatelessWidget {
             ),
           );
         }
-        return SliverToBoxAdapter(child: Text('No data found'));
+        return SliverToBoxAdapter(
+            child: Padding(
+          padding: EdgeInsets.only(
+              left:
+                  20), // Adjust this value as needed to move the text to the right
+          child: Text('No data found'),
+        ));
       },
     );
   }
