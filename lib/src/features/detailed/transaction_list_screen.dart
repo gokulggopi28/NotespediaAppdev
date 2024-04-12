@@ -16,6 +16,11 @@ class TransactionListScreen extends StatelessWidget {
       body: Obx(() {
         if (transactionController.isLoading.isTrue) {
           return Center(child: CircularProgressIndicator());
+        } else if (transactionController.transactionList.isEmpty) {
+          return Center(
+            child: Text("No Transactions Found",
+                style: TextStyle(fontSize: 18, color: Colors.grey)),
+          );
         } else {
           return CustomScrollView(
             slivers: [
@@ -25,7 +30,7 @@ class TransactionListScreen extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       var transaction =
-                          transactionController.transactions[index];
+                          transactionController.transactionList[index];
                       return Card(
                         margin: EdgeInsets.only(
                             bottom: 8), // Small gap between cards
@@ -91,7 +96,7 @@ class TransactionListScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    childCount: transactionController.transactions.length,
+                    childCount: transactionController.transactionList.length,
                   ),
                 ),
               ),
