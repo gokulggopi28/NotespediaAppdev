@@ -46,7 +46,7 @@ void showCustomSubscribeDialog(BuildContext context,
                   SizedBox(height: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF05CF64),
+                      backgroundColor: Color(0xFF05CF64),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4)),
                     ),

@@ -47,8 +47,8 @@ class UnSubscribedShelf extends StatelessWidget {
                       Get.toNamed(AppRoutes.premiumPlansRoute);
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF05CF64), // Background color
-                      onPrimary: Colors.white, // Text color
+                      backgroundColor: Color(0xFF05CF64), // Background color
+                      // onPrimary: Colors.white, // Text color
                       fixedSize: Size(123, 37), // Button size
                       shape: RoundedRectangleBorder(
                         borderRadius:

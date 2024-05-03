@@ -133,8 +133,8 @@ Future<void> _openPdf(
 
   Pspdfkit.pdfViewControllerWillDismiss =
       () => pdfViewControllerWillDismissHandler();
-  Pspdfkit.spreadIndexDidChange =
-      (arguments) => spreadIndexDidChangeHandler(arguments);
+  // Pspdfkit.spreadIndexDidChange =
+  //     (arguments) => spreadIndexDidChangeHandler(arguments);
 
   /*
   if (Theme.of(context).platform == TargetPlatform.iOS) {

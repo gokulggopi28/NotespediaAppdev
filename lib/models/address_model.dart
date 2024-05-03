@@ -49,4 +49,6 @@ class Address {
           : int.tryParse(json['is_default'] ?? '0') ?? 0,
     );
   }
+
+  Object? toJson() {}
 }

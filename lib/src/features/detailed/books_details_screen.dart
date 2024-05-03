@@ -566,7 +566,7 @@ class _BooksDetailsScreenState extends State<BooksDetailsScreen> {
                           bookDetailData: widget.bookDetailData));
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF05CF64),
+                      backgroundColor: Color(0xFF05CF64),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -623,7 +623,7 @@ class _BooksDetailsScreenState extends State<BooksDetailsScreen> {
                 () => WriteReviewScreen(bookDetailData: widget.bookDetailData));
           },
           style: ElevatedButton.styleFrom(
-            primary: Color(0xFF05CF64),
+            backgroundColor: Color(0xFF05CF64),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),

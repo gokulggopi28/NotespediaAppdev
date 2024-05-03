@@ -321,7 +321,7 @@ class _PremiumPlansPageState extends State<PremiumPlansPage> {
                         }
                         : null, // Disable button if no scheme is selected
                         style: ElevatedButton.styleFrom(
-                          primary: const Color(0xFF05CF64), // Background color
+                          backgroundColor: const Color(0xFF05CF64), // Background color
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
                           ),

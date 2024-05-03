@@ -60,7 +60,7 @@ void showCustomLoginDialog(BuildContext context) {
               SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF05CF64), // Background color
+                  backgroundColor: Color(0xFF05CF64), // Background color
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4),
                   ),

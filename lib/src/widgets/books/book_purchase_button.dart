@@ -123,7 +123,7 @@ class BookPurchaseButton extends StatelessWidget {
             },
             style: TextButton.styleFrom(
               backgroundColor: Colors.white,
-              primary: AppColors.brightGreen,
+              // primary: AppColors.brightGreen,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),

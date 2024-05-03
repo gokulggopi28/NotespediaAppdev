@@ -223,7 +223,7 @@ class SettingsScreen extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
           // Text color
-          primary: Colors.black,
+          backgroundColor: Colors.black,
         ),
         child: Text("Logout"),
       ),
