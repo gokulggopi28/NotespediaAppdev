@@ -220,7 +220,7 @@ class FirstHomePage extends StatelessWidget {
             //     child: ReusableTitleWithoutButton(title: "Explore"),
             //   ),
             // ),
-            // SliverGridHomeExplore(),
+            // SliverGridHomeExplore()
 
             // //
             // const SliverGap(24),
